@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:word_suggestion/screens/changepassword_screen.dart';
 import 'package:word_suggestion/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomAppBar(
+        color: Colors.black,
+      ),
       backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
         child: SafeArea(
@@ -34,12 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     size: 120,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: CustomDecoration("Eposta"),
+                    decoration: CustomDecoration("E-mail"),
                     textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(
@@ -49,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    decoration: CustomDecoration("Parola"),
+                    decoration: CustomDecoration("Password"),
                     textInputAction: TextInputAction.done,
                   ),
                   const SizedBox(
@@ -68,25 +72,29 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: _passwordController.text.trim());
                       } on FirebaseAuthException catch (e) {
                         if (e.code == "user-not-found") {
-                          showError(
-                              "Böyle bir kullanıcı sistemde kayıtlı değil.");
+                          ShowError(
+                              "This e-mail address is not registered in the system.");
                         } else if (e.code == "wrong-password") {
-                          showError("Yanlış parola.");
+                          ShowError("Wrong password.");
                         } else if (e.code == "too-many-requests") {
-                          showError(
-                              "Çok fazla deneme yapıldı. Daha sonra tekrar deneyin.");
+                          ShowError(
+                              "Too many attempts have been made. Try again later.");
                         } else if (e.code == "invalid-email") {
-                          showError(
-                              "Lütfen geçerli bir eposta adresi ile tekrar deneyin");
+                          ShowError(
+                              "Please try again with a valid e-mail address.");
                         }
                       }
                     },
-                    child: const Text("Giriş"),
+                    child: const Text("Login"),
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      //padding: const EdgeInsets.fromLTRB(60, 4, 60, 4),
+                      minimumSize: const Size.fromHeight(50),
                       backgroundColor: Colors.grey[400],
+                      shape: const StadiumBorder(),
                     ),
                     onPressed: () async {
                       Navigator.of(context).push(
@@ -96,7 +104,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text("Kayıt Ol"),
+                    child: const Text("Register"),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MaterialButton(
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => const ChangePasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text("Forgot your password?"),
+                    ),
                   ),
                 ],
               ),
@@ -128,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return ind;
   }
 
-  void showError(String errorMessage) {
+  void ShowError(String errorMessage) {
     print(errorMessage);
     showDialog(
       context: context,

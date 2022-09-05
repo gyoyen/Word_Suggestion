@@ -11,17 +11,18 @@ class LoginController extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot){
-          if (snapshot.hasData){
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
             User? user = snapshot.requireData;
-            if (user != null){
-              return const HomeScreen();
-            }
-            else{
+            if (user != null) {
+              return HomeScreen(
+                uid: user.uid.toString(),
+                uemail: user.email.toString(),
+              );
+            } else {
               return const LoginScreen();
             }
-          }
-          else{
+          } else {
             return const LoginScreen();
           }
         },
