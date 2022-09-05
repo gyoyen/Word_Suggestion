@@ -71,18 +71,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: _emailController.text.trim(),
                             password: _passwordController.text.trim());
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == "user-not-found") {
-                          ShowError(
-                              "This e-mail address is not registered in the system.");
-                        } else if (e.code == "wrong-password") {
-                          ShowError("Wrong password.");
-                        } else if (e.code == "too-many-requests") {
-                          ShowError(
-                              "Too many attempts have been made. Try again later.");
-                        } else if (e.code == "invalid-email") {
-                          ShowError(
-                              "Please try again with a valid e-mail address.");
-                        }
+                        final snackBar = SnackBar(
+                          content: Text(e.code),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     child: const Text("Login"),
@@ -120,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                      child: const Text("Forgot your password?"),
+                      child: const Text("Forgot your password? Click here."),
                     ),
                   ),
                 ],
@@ -151,27 +143,5 @@ class _LoginScreenState extends State<LoginScreen> {
       filled: true,
     );
     return ind;
-  }
-
-  void ShowError(String errorMessage) {
-    print(errorMessage);
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                errorMessage,
-                style: const TextStyle(fontSize: 30),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }
