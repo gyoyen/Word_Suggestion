@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.all(30),
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -84,10 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () async {
-                        if (!_formkey.currentState!.validate()) {
+                        if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        _formkey.currentState!.save();
+                        _formKey.currentState!.save();
 
                         try {
                           await FirebaseAuth.instance

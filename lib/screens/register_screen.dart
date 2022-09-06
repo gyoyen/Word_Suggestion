@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:word_suggestion/screens/verify_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -10,13 +13,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _surnameController = TextEditingController();
-  TextEditingController _birthdate = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Padding(
               padding: const EdgeInsets.all(30),
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
                     const Icon(
                       CupertinoIcons.person_badge_plus,
                       size: 100,
@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: CustomDecoration(
+                      decoration: customDecoration(
                           "Name", const Icon(CupertinoIcons.person)),
                     ),
                     const SizedBox(
@@ -74,14 +74,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: CustomDecoration(
+                      decoration: customDecoration(
                           "Surname", const Icon(CupertinoIcons.person_2)),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
-                      controller: _birthdate,
+                      controller: _birthdateController,
                       readOnly: true,
                       keyboardType: TextInputType.datetime,
                       textInputAction: TextInputAction.next,
@@ -91,19 +91,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: CustomDecoration("Select date of birth",
+                      decoration: customDecoration("Select date of birth",
                           const Icon(CupertinoIcons.calendar)),
                       onTap: () async {
-                        DateTime? pickeddate = await showDatePicker(
+                        DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime(2000),
                           firstDate: DateTime(1900),
                           lastDate: DateTime.now(),
                         );
-                        if (pickeddate != null) {
+                        if (pickedDate != null) {
                           setState(() {
-                            _birthdate.text =
-                                DateFormat('dd-MM-yyyy').format(pickeddate);
+                            _birthdateController.text =
+                                DateFormat('dd-MM-yyyy').format(pickedDate);
                           });
                         }
                       },
@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: CustomDecoration(
+                      decoration: customDecoration(
                           "E-mail", const Icon(CupertinoIcons.mail)),
                     ),
                     const SizedBox(
@@ -138,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: CustomDecoration(
+                      decoration: customDecoration(
                           "Password", const Icon(CupertinoIcons.lock)),
                     ),
                     const SizedBox(
@@ -150,18 +150,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundColor: Colors.black,
                         shape: const StadiumBorder(),
                       ),
-                      onPressed: () async {
-                        if (!_formkey.currentState!.validate()) {
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        _formkey.currentState!.save();
-                        /*signUp(
+                        _formKey.currentState!.save();
+
+                        signUp(
                           _nameController.text,
                           _surnameController.text,
-                          _birthdate.text,
-                          _emailController.text,
-                          _passwordController.text,
-                        );*/
+                          _birthdateController.text,
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
                       },
                       child: const Text("Sign Up"),
                     ),
@@ -175,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  InputDecoration CustomDecoration(String hint, Icon icn) {
+  InputDecoration customDecoration(String hint, Icon icn) {
     InputDecoration ind = InputDecoration(
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.white),
@@ -198,5 +199,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   signUp(String name, String surname, String birthdate, String email,
-      String password) async {}
+      String password) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref()
+          .child("Users/${userCredential.user!.uid}");
+
+      await ref.set({
+        "Name": name,
+        "Surname": surname,
+        "BirthDate": birthdate,
+        "Email": email,
+      }).whenComplete(() => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const VerifyScreen(
+                prevScreen: "register_screen",
+              ),
+            ),
+          ));
+    } on FirebaseAuthException catch (e) {
+      final snackBar = SnackBar(
+        content: Text(e.code),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 }
