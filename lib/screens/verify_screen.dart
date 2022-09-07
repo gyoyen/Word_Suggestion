@@ -123,23 +123,17 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     height: 10,
                   ),
                   TextButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                    ),
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 24,
                       ),
-                      child: const Text(
-                        "Cancel",
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
-                      onPressed: () {
-                        if (widget.prevScreen == "register_screen") {
-                          FirebaseAuth.instance.signOut();
-                          //Navigator.pop(context);
-                        } else {
-                          FirebaseAuth.instance.signOut();
-                        }
-                      }),
+                    ),
+                    onPressed: () => FirebaseAuth.instance.signOut(),
+                  ),
                 ],
               ),
             ),
