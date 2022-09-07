@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:word_suggestion/custom_decoration.dart';
 import 'package:word_suggestion/screens/changepassword_screen.dart';
 import 'package:word_suggestion/screens/register_screen.dart';
 
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "E-mail", const Icon(CupertinoIcons.mail)),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "Password", const Icon(CupertinoIcons.lock)),
                       textInputAction: TextInputAction.done,
                       validator: (value) {
@@ -148,27 +149,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  InputDecoration customDecoration(String hint, Icon icn) {
-    InputDecoration ind = InputDecoration(
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      border: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.brown),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      hintText: hint,
-      fillColor: Colors.grey[200],
-      filled: true,
-      icon: icn,
-    );
-    return ind;
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:word_suggestion/custom_decoration.dart';
 import 'package:word_suggestion/screens/verify_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -58,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "Name", const Icon(CupertinoIcons.person)),
                     ),
                     const SizedBox(
@@ -74,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "Surname", const Icon(CupertinoIcons.person_2)),
                     ),
                     const SizedBox(
@@ -91,7 +92,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: customDecoration("Select date of birth",
+                      decoration: CustomDecoration().inputDecoration(
+                          "Select date of birth",
                           const Icon(CupertinoIcons.calendar)),
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
@@ -121,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "E-mail", const Icon(CupertinoIcons.mail)),
                     ),
                     const SizedBox(
@@ -138,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         return null;
                       },
-                      decoration: customDecoration(
+                      decoration: CustomDecoration().inputDecoration(
                           "Password", const Icon(CupertinoIcons.lock)),
                     ),
                     const SizedBox(
@@ -176,28 +178,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  InputDecoration customDecoration(String hint, Icon icn) {
-    InputDecoration ind = InputDecoration(
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      border: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.brown),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      hintText: hint,
-      fillColor: Colors.grey[200],
-      filled: true,
-      icon: icn,
-    );
-    return ind;
-  }
-
   signUp(String name, String surname, String birthdate, String email,
       String password) async {
     try {
@@ -216,7 +196,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "Surname": surname,
         "BirthDate": birthdate,
         "Email": email,
-      }).whenComplete(() => Navigator.pushReplacement(
+      }).then((_) => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (BuildContext context) => const VerifyScreen(
