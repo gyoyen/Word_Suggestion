@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:word_suggestion/screens/login_screen.dart';
-import 'package:word_suggestion/screens/verify_screen.dart';
+import 'package:word_suggestion/screens_login/login_screen.dart';
+import 'package:word_suggestion/screens_login/verify_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

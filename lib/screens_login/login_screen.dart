@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:word_suggestion/custom_decoration.dart';
-import 'package:word_suggestion/screens/changepassword_screen.dart';
-import 'package:word_suggestion/screens/register_screen.dart';
+import 'package:word_suggestion/screens_login/changepassword_screen.dart';
+import 'package:word_suggestion/screens_login/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

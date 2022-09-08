@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:word_suggestion/drawer/drawer_header.dart';
+import 'package:word_suggestion/screens_home/aboutus_screen.dart';
+import 'package:word_suggestion/screens_home/profile_screen.dart';
+import 'package:word_suggestion/screens_home/suggestion_screen.dart';
+import 'package:word_suggestion/screens_home/word_screen.dart';
 
 import 'drawer_item.dart';
 
@@ -55,6 +60,16 @@ class DrawerSidebar extends StatelessWidget {
               color: Colors.black45,
             ),
             DrawerItem(
+              name: "About Us",
+              icn: const Icon(Icons.info_outline),
+              onPressed: () => onItemPressed(context, index: 4),
+            ),
+            const Divider(
+              thickness: 1,
+              height: 10,
+              color: Colors.black45,
+            ),
+            DrawerItem(
               name: "Log Out",
               icn: const Icon(Icons.logout),
               onPressed: () => onItemPressed(context, index: 0),
@@ -78,11 +93,40 @@ class DrawerSidebar extends StatelessWidget {
         FirebaseAuth.instance.signOut();
         break;
       case 1:
-        //Navigator.push
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const SuggestionScreen(),
+          ),
+        );
         break;
       case 2:
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const WordScreen(),
+          ),
+        );
         break;
       case 3:
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const ProfileScreen(),
+          ),
+        );
+        break;
+      case 4:
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const AboutusScreen(),
+          ),
+        );
         break;
       default:
         FirebaseAuth.instance.signOut();

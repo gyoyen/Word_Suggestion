@@ -40,6 +40,7 @@ dependencies:
   firebase_database: ^9.0.16
   firebase_auth: ^3.3.20
   intl: ^0.17.0
+  hidden_drawer_menu: ^3.0.1
 
 dev_dependencies:
   flutter_test:

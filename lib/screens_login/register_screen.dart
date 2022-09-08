@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:word_suggestion/custom_decoration.dart';
-import 'package:word_suggestion/screens/verify_screen.dart';
+import 'package:word_suggestion/screens_login/verify_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
