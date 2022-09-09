@@ -5,6 +5,7 @@ import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:word_suggestion/hidden_drawer/hidden_drawer_header.dart';
 import 'package:word_suggestion/screens_home/aboutus_screen.dart';
 import 'package:word_suggestion/screens_home/profile_screen.dart';
+import 'package:word_suggestion/screens_home/start_screen.dart';
 import 'package:word_suggestion/screens_home/suggestion_screen.dart';
 import 'package:word_suggestion/screens_home/word_screen.dart';
 
@@ -46,20 +47,13 @@ class HiddenDrawerSidebar extends StatelessWidget {
           appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.grey[900],
-            title: const Text("Word Suggestion App"),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    controller.toggle();
-                  },
-                  child: const Icon(
-                    Icons.menu,
-                    size: 26.0,
-                  ),
-                ),
-              ),
+            title: InkWell(
+              onTap: () {
+                controller.toggle();
+              },
+              child: const Text("Word Suggestion App"),
+            ),
+            actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
@@ -79,7 +73,7 @@ class HiddenDrawerSidebar extends StatelessWidget {
               ),
             ],
           ),
-          body: screenCurrent,
+          body: screenCurrent ?? const StartScreen(),
         );
       },
     );
@@ -248,7 +242,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                       ),
                     ),
                     onPressed: () {
-                      _controller.setSelectedMenuPosition(0);
+                      _controller.setSelectedMenuPosition(4);
                     },
                     label: const Text(
                       "About Us",

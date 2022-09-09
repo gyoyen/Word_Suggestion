@@ -16,30 +16,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       drawer: const DrawerSidebar(),
-      /*appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.grey[900],
-        title: const Text("Profile"),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  CupertinoPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) => const HomeScreen(),
-                  ),
-                );
-              },
-              child: const Icon(
-                Icons.home,
-                size: 26.0,
-              ),
-            ),
-          ),
-        ],
-      ),*/
     );
   }
 }
