@@ -39,7 +39,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
 
   @override
   void dispose() {
-    timer!.cancel();
+    if (timer != null) {
+      timer!.cancel();
+    }
     super.dispose();
   }
 

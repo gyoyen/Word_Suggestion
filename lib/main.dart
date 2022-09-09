@@ -7,7 +7,7 @@ import 'package:word_suggestion/screens_login/verify_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //await FirebaseAuth.instance.signOut();
+  await FirebaseAuth.instance.signOut();
 
   runApp(const MyApp());
 }

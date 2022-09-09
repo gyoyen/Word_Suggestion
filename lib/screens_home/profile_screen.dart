@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../drawer/drawer_sidebar.dart';
-import 'home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       drawer: const DrawerSidebar(),
-      appBar: AppBar(
+      /*appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.grey[900],
         title: const Text("Profile"),
@@ -40,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }
