@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class CustomDecoration {
   InputDecoration inputDecoration(String hint, Icon icn) {
     InputDecoration ind = InputDecoration(
+      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.white),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(40),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.black),

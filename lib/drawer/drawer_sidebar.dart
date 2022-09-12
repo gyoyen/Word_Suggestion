@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:word_suggestion/drawer/drawer_header.dart';
 import 'package:word_suggestion/screens_home/aboutus_screen.dart';
 import 'package:word_suggestion/screens_home/profile_screen.dart';
-import 'package:word_suggestion/screens_home/suggestion_screen.dart';
+import 'package:word_suggestion/screens_home/suggestion_main_screen.dart';
 import 'package:word_suggestion/screens_home/word_screen.dart';
 
 import 'drawer_item.dart';
