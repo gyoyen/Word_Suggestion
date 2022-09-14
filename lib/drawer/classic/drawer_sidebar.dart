@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:word_suggestion/drawer/drawer_header.dart';
-import 'package:word_suggestion/screens_home/aboutus_screen.dart';
-import 'package:word_suggestion/screens_home/profile_screen.dart';
-import 'package:word_suggestion/screens_home/suggestion_main_screen.dart';
-import 'package:word_suggestion/screens_home/word_screen.dart';
+import 'package:word_suggestion/drawer/classic/drawer_header.dart';
+import 'package:word_suggestion/drawer/hidden/hidden_drawer_menu.dart';
+import 'package:word_suggestion/screens_login/login_screen.dart';
 
 import 'drawer_item.dart';
 
@@ -93,43 +91,32 @@ class DrawerSidebar extends StatelessWidget {
         FirebaseAuth.instance.signOut();
         break;
       case 1:
-        Navigator.pop(context);
-        Navigator.of(context).push(
-          CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => const SuggestionScreen(),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const HiddenDrawerSidebar(
+                extPage: "mainSuggestion", index: -1)));
         break;
       case 2:
-        Navigator.pop(context);
-        Navigator.of(context).push(
-          CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => const WordScreen(),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                const HiddenDrawerSidebar(extPage: "wordlist", index: -1)));
         break;
       case 3:
-        Navigator.pop(context);
-        Navigator.of(context).push(
-          CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => const ProfileScreen(),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                const HiddenDrawerSidebar(extPage: "profile", index: -1)));
         break;
       case 4:
-        Navigator.pop(context);
-        Navigator.of(context).push(
-          CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => const AboutusScreen(),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                const HiddenDrawerSidebar(extPage: "aboutus", index: -1)));
         break;
       default:
         FirebaseAuth.instance.signOut();
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+        /*Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+            const HiddenDrawerSidebar(extPage: "logout", index: -1)));*/
         break;
     }
   }

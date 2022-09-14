@@ -2,23 +2,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
-import 'package:word_suggestion/hidden_drawer/hidden_drawer_header.dart';
+import 'package:word_suggestion/drawer/classic/drawer_sidebar.dart';
+import 'package:word_suggestion/drawer/hidden/hidden_drawer_header.dart';
 import 'package:word_suggestion/screens_home/aboutus_screen.dart';
+import 'package:word_suggestion/screens_home/buffer_home_screen.dart';
 import 'package:word_suggestion/screens_home/profile_screen.dart';
 import 'package:word_suggestion/screens_home/start_screen.dart';
 import 'package:word_suggestion/screens_home/suggestion_main_screen.dart';
 import 'package:word_suggestion/screens_home/word_screen.dart';
-
-import '../drawer/drawer_sidebar.dart';
-import '../screens_home/home_screen.dart';
+import 'package:word_suggestion/suggestion/suggested_screen.dart';
 
 class HiddenDrawerSidebar extends StatelessWidget {
-  const HiddenDrawerSidebar({Key? key}) : super(key: key);
+  const HiddenDrawerSidebar({
+    Key? key,
+    required this.extPage,
+    required this.index,
+  }) : super(key: key);
+
+  final String extPage;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return SimpleHiddenDrawer(
-      menu: const Menu(),
+      menu: const Menu(x: ""),
       screenSelectedBuilder: (position, controller) {
         Widget? screenCurrent;
         switch (position) {
@@ -26,7 +33,7 @@ class HiddenDrawerSidebar extends StatelessWidget {
             screenCurrent = const HomeScreen();
             break;*/
           case 1:
-            screenCurrent = const SuggestionScreen();
+            screenCurrent = const SuggestionMainScreen();
             break;
           case 2:
             screenCurrent = const WordScreen();
@@ -39,9 +46,37 @@ class HiddenDrawerSidebar extends StatelessWidget {
             break;
           case 100:
             FirebaseAuth.instance.signOut();
+            /*Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));*/
             break;
+          default:
+            if (extPage == "suggested2") {
+              screenCurrent = SuggestedScreen(
+                pageType: "2",
+                showIndex: index,
+              );
+            } else if (extPage == "suggested3") {
+              screenCurrent = SuggestedScreen(
+                pageType: "3",
+                showIndex: index,
+              );
+            } else if (extPage == "suggested4") {
+              screenCurrent = SuggestedScreen(
+                pageType: "4",
+                showIndex: index,
+              );
+            } else if (extPage == "mainSuggestion") {
+              screenCurrent = const SuggestionMainScreen();
+            } else if (extPage == "wordlist") {
+              screenCurrent = const WordScreen();
+            } else if (extPage == "profile") {
+              screenCurrent = const ProfileScreen();
+            } else if (extPage == "aboutus") {
+              screenCurrent = const AboutusScreen();
+            } else if (extPage == "logout") {
+              FirebaseAuth.instance.signOut();
+            }
         }
-
         return Scaffold(
           drawer: const DrawerSidebar(),
           appBar: AppBar(
@@ -61,7 +96,7 @@ class HiddenDrawerSidebar extends StatelessWidget {
                     Navigator.of(context).pushReplacement(
                       CupertinoPageRoute(
                         fullscreenDialog: true,
-                        builder: (context) => const HomeScreen(),
+                        builder: (context) => const BufferHomeScreen(),
                       ),
                     );
                   },
@@ -81,7 +116,9 @@ class HiddenDrawerSidebar extends StatelessWidget {
 }
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  const Menu({Key? key, required this.x}) : super(key: key);
+
+  final String x;
 
   @override
   State<Menu> createState() => _MenuState();
@@ -89,7 +126,7 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> with TickerProviderStateMixin {
   late AnimationController _animationController;
-  late SimpleHiddenDrawerController _controller;
+  static late SimpleHiddenDrawerController _controller;
 
   @override
   void initState() {
@@ -97,7 +134,14 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override

@@ -3,20 +3,22 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:word_suggestion/suggestion/unsuggested_word_screen.dart';
+import 'package:word_suggestion/drawer/hidden/hidden_drawer_menu.dart';
+import 'package:word_suggestion/suggestion/new_suggestion_screen.dart';
 
-import 'home_screen.dart';
+import 'buffer_home_screen.dart';
 
-class SuggestionScreen extends StatefulWidget {
-  const SuggestionScreen({Key? key}) : super(key: key);
+class SuggestionMainScreen extends StatefulWidget {
+  const SuggestionMainScreen({Key? key}) : super(key: key);
 
   @override
-  State<SuggestionScreen> createState() => _SuggestionScreenState();
+  State<SuggestionMainScreen> createState() => _SuggestionMainScreenState();
 }
 
-class _SuggestionScreenState extends State<SuggestionScreen> {
+class _SuggestionMainScreenState extends State<SuggestionMainScreen> {
   String pageName = "";
   bool loading = true;
+  late int wordCount;
 
   @override
   initState() {
@@ -35,7 +37,28 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
     //hiç kayıt yoksa veya tarih farklıysa
     if (!dbEvent.snapshot.exists) {
       await FirebaseDatabase.instance.ref().child("/DailyWords").remove();
-      ref.child("0").set({"Word": "0"});
+
+      await FirebaseDatabase.instance
+          .ref()
+          .child("Users/${FirebaseAuth.instance.currentUser!.uid}")
+          .update({"UnLearnedWords": ""});
+
+      ref.child("0").set({
+        "Word": "0",
+        "isLearned": "-1",
+      });
+      /*ref.child("1").set({
+        "Word": "word1",
+        "isLearned": "0",
+      });
+      ref.child("2").set({
+        "Word": "word2",
+        "isLearned": "1",
+      });
+      ref.child("3").set({
+        "Word": "word3",
+        "isLearned": "1",
+      });*/
       setState(() {
         pageName = "0"; //unsuggested_word_screen_0
       });
@@ -44,19 +67,28 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
     //kayıt varsa
     else {
       //ama 10 kelimeden azsa
-      if (dbEvent.snapshot.children.length < 4) {
+      if (dbEvent.snapshot.children.length < 11) {
         setState(() {
-          pageName = "1"; //unsuggested_word_screen_1
+          pageName = "0"; //unsuggested_word_screen_1
         });
       }
       //ama 10 kelime ise
       else {
         setState(() {
-          pageName = "2"; //suggested_word_screen
+          pageName = "1"; //suggested_word_screen
         });
       }
     }
-    loading = false;
+
+    setState(() {
+      loading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -64,43 +96,55 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
     if (loading) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      return Scaffold(
+      if (pageName != "0") {
+        return Scaffold(
           backgroundColor: Colors.grey[300],
-          body: pageName != "0" && pageName != "1"
-              ? AlertDialog(
-                  actionsAlignment: MainAxisAlignment.spaceEvenly,
-                  icon: const Icon(Icons.info_outline),
-                  title: const Text("Word Limit."),
-                  content: const Text(
-                      "You can see learned or unlearned words again.\nGo to..."),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black),
-                      child: const Text("Learned"),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black),
-                        child: const Text("Unlearned")),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                            CupertinoPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => const HomeScreen()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey[400]),
-                      child: const Text("Cancel"),
-                    ),
-                  ],
-                )
-              : pageName == "0"
-                  ? const UnSuggestedWordScreen(pageType: "0")
-                  : const UnSuggestedWordScreen(pageType: "1"));
+          body: AlertDialog(
+            actionsAlignment: MainAxisAlignment.spaceEvenly,
+            icon: const Icon(Icons.info_outline),
+            title: const Text("Word Limit."),
+            content: const Text(
+                "You can see learned or unlearned words again.\nGo to..."),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HiddenDrawerSidebar(
+                            extPage: "suggested2", index: 0)));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text("Learned")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const HiddenDrawerSidebar(
+                            extPage: "suggested3", index: 0)));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text("Unlearned")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                        fullscreenDialog: true,
+                        builder: (context) => const BufferHomeScreen()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[400],
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text("Cancel")),
+            ],
+          ),
+        );
+      } else {
+        return const NewSuggestionScreen();
+      }
     }
   }
 }

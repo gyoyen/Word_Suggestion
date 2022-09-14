@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:word_suggestion/screens_home/home_screen.dart';
+import 'package:word_suggestion/screens_home/buffer_home_screen.dart';
 
 class VerifyScreen extends StatefulWidget {
   const VerifyScreen({
@@ -81,7 +81,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? const HomeScreen()
+        ? const BufferHomeScreen()
         : WillPopScope(
             onWillPop: () async {
               FirebaseAuth.instance.signOut();

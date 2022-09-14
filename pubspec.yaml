@@ -42,6 +42,9 @@ dependencies:
   intl: ^0.17.0
   hidden_drawer_menu: ^3.0.1
   auto_size_text: ^3.0.0
+  http: ^0.13.5
+  audioplayers: ^0.20.1
+  translator: ^0.1.7
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +72,8 @@ flutter:
   assets:
     - assets/menu_background.png
     - assets/phone_icon.png
+    - assets/turkish_icon.png
+    - assets/english_icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

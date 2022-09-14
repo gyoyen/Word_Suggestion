@@ -194,6 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "BirthDate": birthdate,
         "Email": email,
         "LearnedWords": "",
+        "UnLearnedWords": "",
       }).whenComplete(
           () => {Navigator.popUntil(context, (route) => route.isFirst)});
     } on FirebaseAuthException catch (e) {

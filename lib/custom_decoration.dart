@@ -10,11 +10,11 @@ class CustomDecoration {
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(40),
       ),
       border: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.brown),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(40),
       ),
       hintText: hint,
       fillColor: Colors.grey[200],

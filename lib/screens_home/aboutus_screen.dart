@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../drawer/drawer_sidebar.dart';
+import '../drawer/classic/drawer_sidebar.dart';
 
 class AboutusScreen extends StatefulWidget {
   const AboutusScreen({Key? key}) : super(key: key);
