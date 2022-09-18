@@ -98,7 +98,9 @@ class _SuggestedScreenState extends State<SuggestedScreen> {
                             if (snapshot.hasData && !snapshot.hasError) {
                               return Expanded(
                                 child: ListView(
-                                  children: List.generate(1, (index) {
+                                  children: List.generate(
+                                      snapshot.data!.length.compareTo(0),
+                                      (index) {
                                     print(snapshot.data!.length);
                                     final data = snapshot.data![index];
                                     return Column(

@@ -67,7 +67,7 @@ class _SuggestionMainScreenState extends State<SuggestionMainScreen> {
     //kayıt varsa
     else {
       //ama 10 kelimeden azsa
-      if (dbEvent.snapshot.children.length < 11) {
+      if (dbEvent.snapshot.children.length < 6) {
         setState(() {
           pageName = "0"; //unsuggested_word_screen_1
         });
