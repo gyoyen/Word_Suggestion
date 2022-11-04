@@ -47,18 +47,6 @@ class _SuggestionMainScreenState extends State<SuggestionMainScreen> {
         "Word": "0",
         "isLearned": "-1",
       });
-      /*ref.child("1").set({
-        "Word": "word1",
-        "isLearned": "0",
-      });
-      ref.child("2").set({
-        "Word": "word2",
-        "isLearned": "1",
-      });
-      ref.child("3").set({
-        "Word": "word3",
-        "isLearned": "1",
-      });*/
       setState(() {
         pageName = "0"; //unsuggested_word_screen_0
       });
@@ -67,7 +55,7 @@ class _SuggestionMainScreenState extends State<SuggestionMainScreen> {
     //kayıt varsa
     else {
       //ama 10 kelimeden azsa
-      if (dbEvent.snapshot.children.length < 6) {
+      if (dbEvent.snapshot.children.length < 10) {
         setState(() {
           pageName = "0"; //unsuggested_word_screen_1
         });

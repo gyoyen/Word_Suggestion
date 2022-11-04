@@ -19,9 +19,10 @@ class DictionaryService {
         return dictionaryModel;
       } else {
         print(req.body);
-        final dictionaryModel = dictionaryModelFromJson(req.body);
+        //final dictionaryModel = dictionaryModelFromJson(req.body);
 
-        return dictionaryModel;
+        //return dictionaryModel;
+        return getMeaning(word: word);
       }
     } on SocketException catch (_) {
       return Future.error('No network found');

@@ -1,28 +1,38 @@
 # Word Suggestion
 
-Proje Amacı: İngilizce öğrenmek isteyen kullanıcılara günlük olarak kelime önderileri yapılarak kişinin dil öğrenimine katkı sağlanması.
+This project was developed in Dart using Flutter SDK.</br></br>
 
-## Proje Planlaması
+Project purpose: It is to help users who want to improve their English by offering daily word suggestions.
 
-- Kullanıcı giriş - çıkış:</br></br>
-Kayıt ve giriş işlemleri Firebase Authentication ile yapılacak.</br>
-Kullanıcı giriş çıkışı bir Controller sınıfı tarafından kontrol edilip gerekli sayfaya yönlendirme sağlanacak.</br>
-Ayrıca "Parolamı unuttum" seçeneği ile kullanıcının kayıtlı email adresine parola sıfırlama bağlantısı gönderilecek.</br></br>
+## Materials and Methods
 
-- Kullanıcı kayıt:</br></br>
-"Login" ekranında kullanıcının yeni kayıt oluşturabilmesi için bir seçenek olacaktır.</br>
-Bu seçenekle birlikte kayıt sayfasına yönlendirilen kullanıcı zorunlu ve zorunlu olmayan bilgileriyle birlikte yeni bir üyelik oluşturabilecek.</br>
-Kayıt işlemi tamamlandığında Authentication tarafında yeni bir kayıt oluşturulacak.</br>
-Bu işlemin akabinde Realtime Database kısmında Authentication tarafından alınan "User Id" ile kullanıcının diğer bilgilerini içeren bir kayıt eklenecek.</br></br>
+- User Log In - Log Out:</br></br>
+"Firebase Authentication" is used in user registration and login functions.</br>
+In order to log in, the membership must be approved by the e-mail sent to the user. After login and registration "verify_screen" checks the confirmation status.</br>
+User actions are controlled by a stream with the "main" method.</br>
+A password reset e-mail is sent to the user's e-mail address with the "Forgot password" link.</br></br>
 
-- Profil düzenleme:</br></br>
-Kullanıcı giriş yaptığında kendi bilgileri düzenleyebileceği bir sayfa olacak. Burada kullanıcı değiştirilebilir olan bilgileri üzerinde düzenleme yapabilecek.</br></br>
+- User Register:</br></br>
+User registration can be done with the "Register" button on the "Login" screen.</br>
+There are "Required" fields in the form on this screen. This requirement is checked with the "Sign Up" button and a warning is given.</br>
+After registration, a field is created in the database for user information.</br></br>
 
-- Kelime önerisi:</br></br>
-Kelime öğrenme sayfasında kullanıcıya 10 adet kelime önerisi yapılacak. Bu kelimeler ve anlamları uygun görülen bir Dictionari Api'ı yardımıyla getirilecek.</br>
-Her bir kelime ile birlikte kullanıcıya "Öğrendim" ve "Daha sonra hatırlat" seçenekleri sunulacak.</br>
-Kullanıcı kelimeyi öğrendiyse Realtime Database tarafında "User Id"yi referans alan bir tabloda tutulacak.</br>
-Yeni kelime önerisi yapılacağı zaman bu tablodaki kelimeler kontrol edilecek. Eğer kelime öğrenildiyse kullanıcıya başka bir kelime önderisinde bulunulacak.</br></br>
+- Profile Editing:</br></br>
+If the user is logged in, there is a page where he can edit his own information. Here the user will be able to edit the information that can be changed.</br></br>
 
-- Öğrenilen kelimeler:</br></br>
-Kullanıcı kendisine ait öğrenilen kelimeleri görebilecek. Eğer isterse bu kelimeleri tekrar "Öğrenilmedi" olarak işaretleyebilecek.</br></br>
+Word Suggestion:</br></br>
+On the word suggestion page, 10 words are suggested to the user. These words and their meanings are taken from "dictionaryapi.dev" in json data type.</br>
+With each word, the user will be presented with "I learned" and "Remind me later" options.</br>
+If the user says "I learned", the word ID will be kept in the 'Users' table and the same word will not be suggested again.</br>
+
+- Learned Words:</br></br>
+The user can mark the learned words as "Unlearned" on the Word List (word_screen) page.</br></br>
+
+## Notes
+-- 2 sidebars are used in this project. "classic" and "hidden" under the drawer folder. "classic", the classic drawer included with flutter. "hidden" is taken from pub.dev.</br>
+-- The word suggestion function starts from the "suggestion_main_screen.dart" file under the "screens_home" folder and continues with the files under the "suggestion" folder.</br>
+-- The classes and files that make up the other functions are specified in the folder names under the "lib" folder.</br></br>
+
+## How To Setup</br>
+- Follow the steps in the video... </br>
+[![Watch the video](https://img.youtube.com/vi/dhS4YgOyCzk/hqdefault.jpg)](https://youtu.be/dhS4YgOyCzk)<br/>

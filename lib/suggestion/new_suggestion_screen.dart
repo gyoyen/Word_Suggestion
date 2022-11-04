@@ -168,8 +168,13 @@ class _NewSuggestionScreenState extends State<NewSuggestionScreen> {
                                                   BorderRadius.circular(10),
                                             ),
                                             title: Text(data.word!),
-                                            subtitle: Text(
-                                                data.phonetics![index].text!),
+                                            subtitle:
+                                                data.phonetics![index].text !=
+                                                        null
+                                                    ? Text(data
+                                                        .phonetics![index]
+                                                        .text!)
+                                                    : const Text("No Data"),
                                             trailing: IconButton(
                                                 onPressed: () {
                                                   String? path = data

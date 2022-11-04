@@ -22,9 +22,9 @@ namespace SaveWordListToFirebase
             IFirebaseConfig fbconfig = new FirebaseConfig
             {
                 //Your Project's AuthSecret Key.
-                AuthSecret = "",
+                AuthSecret = "JRCk7CVCK9epRabjiqkq4rTKSa2ff5wfalGEZMgE",
                 //Your Realtime Database Link.
-                BasePath = ""
+                BasePath = "https://project-x-e6abe-default-rtdb.firebaseio.com/"
             };
             IFirebaseClient fbclient;
 
